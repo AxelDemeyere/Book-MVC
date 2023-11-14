@@ -49,7 +49,6 @@ class Model
         $parameters = implode(', ', array_keys($values));
         $sql = "INSERT INTO $table ($column) VALUES ($parameters)";
         $query = Database::get()->prepare($sql);
-        header('Location: /utilisateurs');
         return $query->execute($values);
 
         

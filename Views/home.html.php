@@ -1,48 +1,11 @@
-<?php
-    require 'data.php';
-    $title = 'Nos livres'; // Le titre dans l'onglet du navigateur (Pour le SEO)
-
-    // Récupérer les livres dans la BDD
-    require 'config/database.php';
-    $books = $db->query('SELECT * FROM books')->fetchAll();
-
-    // Est-ce qu'une recherche a eu lieu ?
-    $search = $_GET['search'] ?? '';
-
-    // On va filtrer le tableau $books
-    $newBooks = [];
-
-    foreach ($books as $book) {
-        // Quam toto => Toto
-        if (str_contains(strtolower($book['title']), strtolower($search)) ||
-            str_contains(strtolower($book['author']), strtolower($search))) {
-            $newBooks[] = $book;
-            // array_push($newBooks, $book);
-        }
-    }
-
-    $books = $newBooks;
-?>
-
-<?php require 'partials/header.php'; ?>
+<?php require 'partials/header.html.php';?>
 
     <div class="max-w-5xl mx-auto px-3">
-        <?php if ($message = getMessage()) { ?>
-            <p><?= $message; ?></p>
-        <?php } ?>
-
         <div class="text-center mb-8">
-            <a class="bg-gray-900 px-4 py-2 text-white inline-block rounded hover:bg-gray-700 duration-200" href="ajout.php">
+            <a class="bg-gray-900 px-4 py-2 text-white inline-block rounded hover:bg-gray-700 duration-200" href="/book/new">
                 Créer un livre
             </a>
         </div>
-
-        <?php if ($search) { ?>
-        <div class="mb-6 text-center text-2xl">
-            Vous avez cherché "<?= $search; ?>".
-            Nous avons <?= count($books); ?> résultats.
-        </div>
-        <?php } ?>
 
         <form action="">
             <div class="flex justify-between items-center mb-8">
@@ -78,25 +41,23 @@
         </form>
 
         <div class="flex flex-wrap -mx-3">
-            <?php foreach ($books as $book) { ?>
+        <?php foreach ($books as $book) { ?>
             <div class="w-1/2 lg:w-1/4 mb-6">
                 <div class="shadow-lg rounded-lg h-full mx-3">
                     <div class="flex flex-col justify-between h-full">
-                        <a href="livre.php?id=<?= $book['id']; ?>">
-                            <img class="rounded-t-lg" src="<?= $book['image']; ?>" alt="<?= $book['title']; ?>">
+                        <a href="/book/1">
+                            <img class="rounded-t-lg" src="<?= $book['image'] ?>" alt="<?= $book['image'] ?>">
                             <div class="p-4">
-                                <h2 class="text-center"><?= $book['title']; ?></h2>
+                                <h2 class="text-center"><?= $book['title'] ?></h2>
                                 <div class="flex justify-around items-center">
-                                    <p class="text-lg font-bold"><?= price($book['price'], $book['discount']); ?> €</p>
-                                    <?php if ($book['discount'] > 0) { ?>
-                                    <p class="text-xs font-bold">-<?= $book['discount']; ?>% <span class="line-through"><?= price($book['price']); ?> €</span></p>
-                                    <?php } ?>
+                                    <p class="text-lg font-bold"><?= $book['price'] ?></p>
+                                    <p class="text-xs font-bold">-<?= $book['discount'] ?>% <span class="line-through"><?= $book['price'] ?> €</span></p>
                                 </div>
                                 <p class="text-xs text-center text-gray-400">
-                                    Par <strong><?= $book['author']; ?></strong> en <?= date('Y', strtotime($book['published_at'])); ?>
+                                    Par <strong><?= $book['author'] ?></strong> en 2014
                                 </p>
                                 <p class="text-xs text-center text-gray-400">
-                                    ISBN: <strong><?= isbn($book['isbn']); ?></strong>
+                                    ISBN: <strong>8-248827-583739</strong>
                                 </p>
                             </div>
                         </a>
@@ -120,4 +81,17 @@
         </div>
     </div>
 
-<?php require 'partials/footer.php'; ?>
+
+
+    <!-- footer -->
+
+    <div class="max-w-5xl mx-auto py-8 mt-8">
+        <p class="text-center">Copyright &copy; 2023</p>
+    </div>
+</body>
+</html>
+
+
+<?php 
+    require 'partials/footer.html.php';
+?>
