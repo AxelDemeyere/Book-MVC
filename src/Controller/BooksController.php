@@ -1,29 +1,32 @@
 <?php
 
-// namespace 
 namespace M2i\Mvc\Controller;
-
-
-// use
 
 use M2i\Mvc\Model\Book;
 use M2i\Mvc\View;
 
-// class 
 class BooksController
 {
-
-    // function
-    public function list()
+    public function index()
     {
-        $title = 'Livres';
         $books = Book::all();
-        
-        return View::render('home',
-        [
-            'books' => $books,
-            'title' => $title,
-        ]);
-
+        return View::render('books', ['books'=> $books]);
     }
+
+    public function show($id)
+    {
+
+        $books = Book::find($id);
+
+        if (!$books) {
+            http_response_code(404);
+            return View::render('404');
+        }
+
+        return View::render('book', ['book' => $books]);
+    }
+
+
+
+
 }
