@@ -54,9 +54,10 @@ class Model
         
     }
 
-    public function update()
+    public function delete(int $id)
     {
-        $table = static::getTable();
-
+        $query = Database::get()->prepare('DELETE FROM books WHERE id = :id');
+        $query->execute(['id' => ($id)]);
+        header('Location: /livres');
     }
 }

@@ -13,7 +13,8 @@ $app->addRoutes([
     ['GET', '/', 'HomeController@index'],
     ['GET', '/books', 'BooksController@index'],
     ['GET','/book/[i:id]','BooksController@show'],
-    ['GET|POST', '/books/creer', 'BooksController@create'],
+    ['GET|POST', '/books/new', 'CreateController@create'],
+    ['GET','/book/[i:id]/delete','DeleteController@delete'],
 ]);
 
 // Lancer l'application

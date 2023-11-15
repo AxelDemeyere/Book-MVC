@@ -11,10 +11,10 @@
 
             <div class="flex items-center justify-between my-10">
                 <div>
-                    <p class="text-4xl font-bold"><?= $book['price'] ?>€</p>
+                    <p class="text-4xl font-bold"><?= $book['price'] - ($book['price'] * ($book['discount']/100)); ?>€</p>
 
                     <?php if ($book['discount'] > 0) { ?>
-                        <p class="text-lg font-bold">-<?= $book['discount'] ?>% <span class="line-through"><?= $book['price'] ?></span></p>
+                        <p class="text-lg font-bold">-<?= $book['discount'] ?>% <span class="line-through"><?= $book['price'] ?>€</span></p>
                     <?php } ?>
                 </div>
                 <div class="text-lg text-gray-900">
